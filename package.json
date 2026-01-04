@@ -1,0 +1,22 @@
+{
+  "name": "mcbe-structure-extract",
+  "version": "1.0.0",
+  "description": "Extract .mcstructure files from Minecraft Bedrock worlds (.mcworld or world folder)",
+  "type": "module",
+  "bin": {
+    "mcbe-structure-extract": "bin/mcbe-structure-extract.js"
+  },
+  "dependencies": {
+    "mcbe-leveldb-reader": "^1.0.0",
+    "archiver": "^6.0.0"
+  },
+  "keywords": [
+    "minecraft",
+    "bedrock",
+    "mcbe",
+    "structure",
+    "mcstructure",
+    "leveldb"
+  ],
+  "license": "MIT"
+}
