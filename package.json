@@ -7,8 +7,9 @@
     "mcbe-structure-extract": "bin/mcbe-structure-extract.js"
   },
   "dependencies": {
+    "archiver": "^6.0.0",
     "mcbe-leveldb-reader": "file:vendor/mcbe-leveldb-reader",
-    "archiver": "^6.0.0"
+    "pako": "^2.1.0"
   },
   "keywords": [
     "minecraft",
