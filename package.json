@@ -1,6 +1,6 @@
 {
   "name": "mcbe-structure-extract",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Extract .mcstructure files from Minecraft Bedrock worlds (.mcworld or world folder)",
   "type": "module",
   "bin": {
