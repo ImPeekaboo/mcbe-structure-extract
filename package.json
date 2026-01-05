@@ -9,7 +9,8 @@
   "dependencies": {
     "archiver": "^6.0.0",
     "mcbe-leveldb-reader": "file:vendor/mcbe-leveldb-reader",
-    "pako": "^2.1.0"
+    "pako": "^2.1.0",
+    "@zip.js/zip.js": "^2.7.57"
   },
   "keywords": [
     "minecraft",
