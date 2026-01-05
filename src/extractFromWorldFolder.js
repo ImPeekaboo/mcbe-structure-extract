@@ -1,33 +1,41 @@
 import fs from "fs";
 import path from "path";
-import archiver from "archiver";
-import { extractFromMcworld } from "./extractFromMcworld.js";
-import os from "os";
+import { readWorldFolder } from "mcbe-leveldb-reader"; // dari fork
 
 export async function extractFromWorldFolder(worldDir, outputDir) {
-  console.log("[*] Zipping world folder:", worldDir);
+  console.log("[*] Reading world folder directly:", worldDir);
 
-  const tmpMcworld = path.join(
-    os.tmpdir(),
-    `mcbe_tmp_${Date.now()}.mcworld`
-  );
+  const world = await readWorldFolder(worldDir);
 
-  await zipFolder(worldDir, tmpMcworld);
-  await extractFromMcworld(tmpMcworld, outputDir);
+  let count = 0;
 
-  fs.unlinkSync(tmpMcworld);
-}
+  for (const [key, value] of Object.entries(world)) {
+    const keyStr = key.toString();
 
-function zipFolder(src, dest) {
-  return new Promise((resolve, reject) => {
-    const output = fs.createWriteStream(dest);
-    const archive = archiver("zip", { zlib: { level: 9 } });
+    if (!keyStr.startsWith("structuretemplate_")) continue;
 
-    archive.pipe(output);
-    archive.directory(src, false);
-    archive.finalize();
+    const fullId = keyStr.substring("structuretemplate_".length);
+    let namespace = "default";
+    let name = fullId;
 
-    output.on("close", resolve);
-    archive.on("error", reject);
-  });
+    if (fullId.includes(":")) {
+      [namespace, name] = fullId.split(":");
+    }
+
+    namespace = namespace.replace(/[^\w.-]/g, "_");
+    name = name.replace(/[^\w.-]/g, "_");
+
+    const nsDir = path.join(outputDir, namespace);
+    fs.mkdirSync(nsDir, { recursive: true });
+
+    const outPath = path.join(nsDir, `${name}.mcstructure`);
+    fs.writeFileSync(outPath, Buffer.from(value.value));
+
+    console.log(`[+] ${namespace}/${name}.mcstructure`);
+    count++;
+  }
+
+  if (count === 0) {
+    console.warn("⚠️ No structures found.");
+  }
 }

@@ -7,7 +7,7 @@
     "mcbe-structure-extract": "bin/mcbe-structure-extract.js"
   },
   "dependencies": {
-    "mcbe-leveldb-reader": "^1.0.0",
+    "mcbe-leveldb-reader": "file:vendor/mcbe-leveldb-reader",
     "archiver": "^6.0.0"
   },
   "keywords": [
